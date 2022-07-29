@@ -320,8 +320,8 @@ int main(int argc, char** argv)
     Lee_test->Set_Collapse();
 
     ///////// Four options:
-    // Lee_test->Set_measured_data();// (1), really data
-    // Lee_test->Set_toy_Asimov();// (2), Asiomv sample
+    // Lee_test->Set_measured_data();// (1), real data
+    // Lee_test->Set_toy_Asimov();// (2), Asimov sample
     // Lee_test->Set_Variations(int num_toy);// (3), generate many toy-MC
     // Lee_test->Set_toy_Variation(int itoy);// which toy-MC to be used   
     // Lee_test->Set_fakedata(TMatrixD matrix_fakedata);// (4), user's defined fakedata
@@ -375,7 +375,7 @@ int main(int argc, char** argv)
   
   //////////////////////////////// Scripts:
 
-  if( 0 ) {
+  if( 1 ) {
 
     ///////
     
@@ -412,11 +412,12 @@ int main(int argc, char** argv)
     
     ///////
 
-    int Ntoys = 2;// number of toy-MC used to generate the distribution_dchi2    
+    int Ntoys = 10;// number of toy-MC used to generate the distribution_dchi2
+    // Ntoys = 1;// when calcualte the dchi2 from data
     
     /////// 2d space of (Np, 0p)
-    int bins_Np = 5;
-    int bins_0p = 5;
+    int bins_Np = 10;
+    int bins_0p = 10;
     
     TH2D *h2d_space = new TH2D("h2d_space", "", bins_Np, 0, 10, bins_0p, 0, 10);
 
@@ -460,7 +461,8 @@ int main(int argc, char** argv)
 
 	for(int itoy=1; itoy<=Ntoys; itoy++) {// scan each pseudo experiment
 	  Lee_test->Set_toy_Variation(itoy);
-
+	  //Lee_test->Set_measured_data();// (1), real data
+	  
 	  double chi2_var = Lee_test->FCN_Np_0p( pars_2d );// calcualte the chi2 value at the point
 	  
 	  /////// do minimization: initial value is important. May find local minimum if the values are not suitable
